@@ -14,4 +14,13 @@ Plik `gospodarstwa.xlsx` zawiera 3 arkusze:
 6.  Oblicz ile było gospodarstw domowych ze względu na poszczególne warianty zmiennej `klm`.
 7.  Oblicz ile było gospodarstw domowych w poszczególnych województwach.
 8.  Oblicz ile było gospodarstw domowych w poszczególnych województwach ze względu na warianty zmiennej `d61` (Sytuacja materialna gospodarstwa).
+9. Utwórz nową zmienną `roznica=dochg-wydg`. Pozostaw w zbiorze zmienne `dochg`, `wydg` i `roznica`.
+10. Wyświetl nazwy wszystkich zmiennych w zbiorze gospodarstwa.
+11. Oblicz średnie wydatki wszystkich gospodarstw domowych.
+12. Oblicz średnie wydatki i dochody wszystkich gospodarstw domowych.
+13. Oblicz średnie, min, max, odchylenie standardowe oraz medianę wydatków.
+14. Oblicz średnie wydatki w ramach klasy miejscowoúci.
+15. Utwórz dwie nowe zmienne `roznica=dochg-wydg` oraz `doch_os=dochg/los` i pozostaw je jako jedyne w zbiorze danych.
+16. Utwórz nowπ zmienną `klasa`, która przyjmuje dwie wartości: `wieś`, gdy gospodarstwo jest ze wsi oraz `miasto`, gdy gospodarstwo jest z miasta.
+
 
