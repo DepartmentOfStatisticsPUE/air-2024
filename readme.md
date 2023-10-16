@@ -2,4 +2,4 @@
 
 1. Wprowadzenie do `pandas` i `np`:
     + [Wykład 1](notebooks/0_intro.ipynb)
-    + [Wykład 2](notebooks/0_processing.ipynb)
+    + [Wykład 2](notebooks/1_processing.ipynb)
