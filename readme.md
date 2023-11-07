@@ -4,3 +4,4 @@
     + [Wykład 1](notebooks/0_intro.ipynb)
     + [Wykład 2](notebooks/1_processing.ipynb)
     + [Ćwiczenia #1](exercises/1-cwiczenia.md)
+    + [Wykład 3](notebooks/2_laczenie.ipynb)
