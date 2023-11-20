@@ -9,5 +9,5 @@
 3. Porządkowanie liniowe:
     + Wykład 4:
         + [miernik bezwzorcowy i wzorcowy](notebooks/3_porzadkowanie_zajecia.ipynb),
-        + [metoda TOPSIS]()
+        + [metoda TOPSIS](notebooks/3_porzadkowanie_topsis.ipynb)
     + Wykład 5: [Case study na zajęcia]
