@@ -10,4 +10,4 @@
     + Wykład 4:
         + [miernik bezwzorcowy i wzorcowy](notebooks/3_porzadkowanie_zajecia.ipynb),
         + [metoda TOPSIS](notebooks/3_porzadkowanie_topsis.ipynb)
-    + Wykład 5: [Case study na zajęcia](https://htmlpreview.github.io/?https://raw.githubusercontent.com/DepartmentOfStatisticsPUE/air-2024/main/case-study/air-case-study.html)
+    + Wykład 5: [Case study na zajęcia](https://htmlpreview.github.io/?https://raw.githubusercontent.com/DepartmentOfStatisticsPUE/air-2024/main/case-study/air-case-study.nb.html)
