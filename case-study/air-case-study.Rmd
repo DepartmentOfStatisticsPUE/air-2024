@@ -7,21 +7,93 @@ output: html_notebook
 
 # Studium przypadku
 
-Celem niniejszego studium przypadku (ang. case study) jest **zbudowanie rankingu gmin ze względu zadany zestaw cech dla dwóch wskazanych lat**. 
+Celem niniejszego studium przypadku (ang. case study) jest **zbudowanie rankingu gmin ze względu zadany zestaw cech dla 2015 i 2022 roku**. 
 
 Cele szczegółowe dotyczą:
 
 + C1: integracji danych z kilku źródeł.
-+ C2: określenie charakteru badanych zmiennych (podział na stymulanty, destymulanty i nominanty).
++ C2: określenia charakteru badanych zmiennych (podział na stymulanty, destymulanty i nominanty).
 + C3: utworzenia miernika syntetycznego metodą bezwzorcową.
-+ C4: utworzenie miernika syntetycznego z wykorzystaniem metody TOPSIS.
++ C4: utworzenie miernika syntetycznego metodą TOPSIS.
 + C5: porównanie rankingów między latami.
 
-Pytania:
+Pytania badawcze:
+
++ czy ranking uległ zmianie na przestrzeni badanych lat?
++ które gminy zyskały najwięcej, a które najmniej? 
++ jaka może być tego przyczyna?
 
 # Dane
 
+Na potrzeby case study udostępniono następujące dane:
 
++ **Zasoby mieszkaniowe - wskaźniki**:
+  + przeciętna powierzchnia użytkowa 1 mieszkania
+  + przeciętna powierzchnia użytkowa mieszkania na 1 osobę
+  + mieszkania na 1000 mieszkańców
+  + przeciętna liczba izb w 1 mieszkaniu
+  + przeciętna liczba osób na 1 mieszkanie
+  + przeciętna liczba osób na 1 izbę
++ **Wskaźniki obciążenia demograficznego**:
+  + ludność w wieku poprodukcyjnym na 100 osób w wieku produkcyjnym
+  + współczynnik obciążenia demograficznego osobami starszymi
++ **Udział ludności wg ekonomicznych grup wieku w % ludności ogółem**
+  + w wieku przedprodukcyjnym
+  + w wieku produkcyjnym
++ **Tereny zieleni - wskaźniki**
+  + udział powierzchni terenów zieleni w powierzchni ogółem
+  + liczba nasadzeń drzew i krzewów w zadrzewieniach oraz terenach zieleni na 1 km2 powierzchni danej jednostki
+  terytorialnej
+
+Dane pochodzą z Banku Danych Lokalnych i zostały udostępnione w formacie XLSX oraz CSV.
 
 # Poszczgólne kroki analizy
+
+Aby wykonać zadanie należy:
+
+1. Przeczytać definicje poszczególnych zmiennych (pomogą w tym pliki MS Excel jak i sam Bank Danych Lokalnych) oraz określić charakter zmiennych: stymulanty i destymulanty.
+2. Wczytać dane z plików MS Excel lub csv (gdyby były problemy z wgraniem danych na colab):
+  + w momencie wczytania należy nadać następujące nazwy: `kod`, `nazwa`, `wsk`, `rok`, `wartosc`, `jednostka`, `atrybut` zamiast `Kod;Nazwa;Wskaźniki;Rok;Wartosc;Jednostka miary;Atrybut`,
+  + uwaga: w przypadku wczytywania pliku z CSV proszę przyjrzeć się jego strukturze.
+3. Utworzyć nowe zbiory danych dla każdego wskaźnika:
+  + przykładowo: jeżeli zbiór zawiera 6 wskaźników to należy utworzyć 6 zbiorów danych poprzez filtrowanie wierszy. Przykładowo:
+  ```{python}
+  wsk1 = mieszkania[mieszkania['wsk'] == "przeciętna powierzchnia użytkowa 1 mieszkania"]
+  ```
+  + w każdym zbiorze należy zamienić nazwę kolumny `wartosc` na nazwę wskaźnika zgodnie z następującym schematem (nazwa wskaźnika => nowa nazwa dla kolumny `wartosc`):
+      + przeciętna powierzchnia użytkowa 1 mieszkania => `mieszk_powuz_1m`,
+      + przeciętna powierzchnia użytkowa mieszkania na 1 osobę => `mieszk_powuz_1os`,
+      + mieszkania na 1000 mieszkańców => `mieszk_na_1000k`,
+      + przeciętna liczba izb w 1 mieszkaniu => `mieszk_izb_1m`,
+      + przeciętna liczba osób na 1 mieszkanie => `mieszk_osob_1m`,
+      + przeciętna liczba osób na 1 izbę => `mieszk_osob_1i`,
+      + ludność w wieku poprodukcyjnym na 100 osób w wieku produkcyjnym  => `ludn_poprod_1000prod`,
+      + współczynnik obciążenia demograficznego osobami starszymi => `ludn_wsk_obciazenia`,
+      + w wieku przedprodukcyjnym => `ludn_udz_prze`,
+      + w wieku produkcyjnym => `ludn_udz_prod`,
+      + udział powierzchni terenów zieleni w powierzchni ogółem => `zielen_pow`,
+      + liczba nasadzeń drzew i krzewów w zadrzewieniach oraz terenach zieleni na 1 km2 powierzchni danej jednostki
+  terytorialnej => `zielen_nasadzenia`,
+  
+4. Połączyć wszystkie zbiory w jeden, większy zbiór danych zawierający wszystkie wskażniki oraz następujące kolumny: `kod`, `kazwa`, `rok` wykorzystując `pd.merge()`.
+5. Odpowiedzieć na pytania:
+    + Czy wszystkie wskaźniki możemy użyć? 
+    + Czy mamy pełną informację?
+    + Może trzeba jakieś zmienne pominąć bo mają dużo braków danych?
+
+6. Utworzyć dwa zbiory danych: `analiza2015` i `analiza2022`.
+7. Dla każdego zbioru niezależnie utworzyć dwa wskaźniki:
+    + metodą bezwzorcową (kolumny `bez_ranking_2015`, `bez_smr_rok_2015`, `bez_ranking_2022`, `bez_smr_rok_2022`),
+    + metodą TOPSIS (kolumny `wzr_ranking_2015`, `wzr_smr_2015`, `wzr_ranking_2022`, `wzr_smr_2022`),
+    + aby utworzyć ranking mozna zbiór danych posortować i utworzyć kolumnę używając metody `rank('dense', ascending=False)`.
+8. Utworzyć zbiór `wyniki` łączący `analiza2015` i  `analiza2022` zawierający zmienne:
+  + `kod`, `kazwa`, oraz 
+  + wskażniki z punkty 7
+9. Porównać rankingi odpowiadające sobie między latami z wykorzystaniem:
+  + wykresu rozrzutu
+  + porównania pozycji w rankingu
+  + wyznaczenia różnicy w rankingach
+10. zidentyfikować różnice między rankingami
+
+  
 

@@ -1757,29 +1757,167 @@ display: none;
 <div id="studium-przypadku" class="section level1">
 <h1>Studium przypadku</h1>
 <p>Celem niniejszego studium przypadku (ang. case study) jest
-<strong>zbudowanie rankingu gmin ze względu zadany zestaw cech dla dwóch
-wskazanych lat</strong>.</p>
+<strong>zbudowanie rankingu gmin ze względu zadany zestaw cech dla 2015
+i 2022 roku</strong>.</p>
 <p>Cele szczegółowe dotyczą:</p>
 <ul>
 <li>C1: integracji danych z kilku źródeł.</li>
-<li>C2: określenie charakteru badanych zmiennych (podział na stymulanty,
+<li>C2: określenia charakteru badanych zmiennych (podział na stymulanty,
 destymulanty i nominanty).</li>
 <li>C3: utworzenia miernika syntetycznego metodą bezwzorcową.</li>
-<li>C4: utworzenie miernika syntetycznego z wykorzystaniem metody
-TOPSIS.</li>
+<li>C4: utworzenie miernika syntetycznego metodą TOPSIS.</li>
 <li>C5: porównanie rankingów między latami.</li>
 </ul>
-<p>Pytania:</p>
+<p>Pytania badawcze:</p>
+<ul>
+<li>czy ranking uległ zmianie na przestrzeni badanych lat?</li>
+<li>które gminy zyskały najwięcej, a które najmniej?</li>
+<li>jaka może być tego przyczyna?</li>
+</ul>
 </div>
 <div id="dane" class="section level1">
 <h1>Dane</h1>
+<p>Na potrzeby case study udostępniono następujące dane:</p>
+<ul>
+<li><strong>Zasoby mieszkaniowe - wskaźniki</strong>:
+<ul>
+<li>przeciętna powierzchnia użytkowa 1 mieszkania</li>
+<li>przeciętna powierzchnia użytkowa mieszkania na 1 osobę</li>
+<li>mieszkania na 1000 mieszkańców</li>
+<li>przeciętna liczba izb w 1 mieszkaniu</li>
+<li>przeciętna liczba osób na 1 mieszkanie</li>
+<li>przeciętna liczba osób na 1 izbę</li>
+</ul></li>
+<li><strong>Wskaźniki obciążenia demograficznego</strong>:
+<ul>
+<li>ludność w wieku poprodukcyjnym na 100 osób w wieku produkcyjnym</li>
+<li>współczynnik obciążenia demograficznego osobami starszymi</li>
+</ul></li>
+<li><strong>Udział ludności wg ekonomicznych grup wieku w % ludności
+ogółem</strong>
+<ul>
+<li>w wieku przedprodukcyjnym</li>
+<li>w wieku produkcyjnym</li>
+</ul></li>
+<li><strong>Tereny zieleni - wskaźniki</strong>
+<ul>
+<li>udział powierzchni terenów zieleni w powierzchni ogółem</li>
+<li>liczba nasadzeń drzew i krzewów w zadrzewieniach oraz terenach
+zieleni na 1 km2 powierzchni danej jednostki terytorialnej</li>
+</ul></li>
+</ul>
+<p>Dane pochodzą z Banku Danych Lokalnych i zostały udostępnione w
+formacie XLSX oraz CSV.</p>
 </div>
 <div id="poszczgólne-kroki-analizy" class="section level1">
 <h1>Poszczgólne kroki analizy</h1>
+<p>Aby wykonać zadanie należy:</p>
+<ol style="list-style-type: decimal">
+<li>Przeczytać definicje poszczególnych zmiennych (pomogą w tym pliki MS
+Excel jak i sam Bank Danych Lokalnych) oraz określić charakter
+zmiennych: stymulanty i destymulanty.</li>
+<li>Wczytać dane z plików MS Excel lub csv (gdyby były problemy z
+wgraniem danych na colab):</li>
+</ol>
+<ul>
+<li>w momencie wczytania należy nadać następujące nazwy:
+<code>kod</code>, <code>nazwa</code>, <code>wsk</code>,
+<code>rok</code>, <code>wartosc</code>, <code>jednostka</code>,
+<code>atrybut</code> zamiast
+<code>Kod;Nazwa;Wskaźniki;Rok;Wartosc;Jednostka miary;Atrybut</code>,</li>
+<li>uwaga: w przypadku wczytywania pliku z CSV proszę przyjrzeć się jego
+strukturze.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Utworzyć nowe zbiory danych dla każdego wskaźnika:</li>
+</ol>
+<ul>
+<li>przykładowo: jeżeli zbiór zawiera 6 wskaźników to należy utworzyć 6
+zbiorów danych poprzez filtrowanie wierszy. Przykładowo:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<pre class="python"><code>wsk1 = mieszkania[mieszkania[&#39;wsk&#39;] == &quot;przeciętna powierzchnia użytkowa 1 mieszkania&quot;]</code></pre>
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>w każdym zbiorze należy zamienić nazwę kolumny <code>wartosc</code>
+na nazwę wskaźnika zgodnie z następującym schematem (nazwa wskaźnika
+=&gt; nowa nazwa dla kolumny <code>wartosc</code>):
+<ul>
+<li>przeciętna powierzchnia użytkowa 1 mieszkania =&gt;
+<code>mieszk_powuz_1m</code>,</li>
+<li>przeciętna powierzchnia użytkowa mieszkania na 1 osobę =&gt;
+<code>mieszk_powuz_1os</code>,</li>
+<li>mieszkania na 1000 mieszkańców =&gt;
+<code>mieszk_na_1000k</code>,</li>
+<li>przeciętna liczba izb w 1 mieszkaniu =&gt;
+<code>mieszk_izb_1m</code>,</li>
+<li>przeciętna liczba osób na 1 mieszkanie =&gt;
+<code>mieszk_osob_1m</code>,</li>
+<li>przeciętna liczba osób na 1 izbę =&gt;
+<code>mieszk_osob_1i</code>,</li>
+<li>ludność w wieku poprodukcyjnym na 100 osób w wieku produkcyjnym
+=&gt; <code>ludn_poprod_1000prod</code>,</li>
+<li>współczynnik obciążenia demograficznego osobami starszymi =&gt;
+<code>ludn_wsk_obciazenia</code>,</li>
+<li>w wieku przedprodukcyjnym =&gt; <code>ludn_udz_prze</code>,</li>
+<li>w wieku produkcyjnym =&gt; <code>ludn_udz_prod</code>,</li>
+<li>udział powierzchni terenów zieleni w powierzchni ogółem =&gt;
+<code>zielen_pow</code>,</li>
+<li>liczba nasadzeń drzew i krzewów w zadrzewieniach oraz terenach
+zieleni na 1 km2 powierzchni danej jednostki terytorialnej =&gt;
+<code>zielen_nasadzenia</code>,</li>
+</ul></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Połączyć wszystkie zbiory w jeden, większy zbiór danych zawierający
+wszystkie wskażniki oraz następujące kolumny: <code>kod</code>,
+<code>kazwa</code>, <code>rok</code> wykorzystując
+<code>pd.merge()</code>.</li>
+<li>Odpowiedzieć na pytania:
+<ul>
+<li>Czy wszystkie wskaźniki możemy użyć?</li>
+<li>Czy mamy pełną informację?</li>
+<li>Może trzeba jakieś zmienne pominąć bo mają dużo braków danych?</li>
+</ul></li>
+<li>Utworzyć dwa zbiory danych: <code>analiza2015</code> i
+<code>analiza2022</code>.</li>
+<li>Dla każdego zbioru niezależnie utworzyć dwa wskaźniki:
+<ul>
+<li>metodą bezwzorcową (kolumny <code>bez_ranking_2015</code>,
+<code>bez_smr_rok_2015</code>, <code>bez_ranking_2022</code>,
+<code>bez_smr_rok_2022</code>),</li>
+<li>metodą TOPSIS (kolumny <code>wzr_ranking_2015</code>,
+<code>wzr_smr_2015</code>, <code>wzr_ranking_2022</code>,
+<code>wzr_smr_2022</code>),</li>
+<li>aby utworzyć ranking mozna zbiór danych posortować i utworzyć
+kolumnę używając metody
+<code>rank(&#39;dense&#39;, ascending=False)</code>.</li>
+</ul></li>
+<li>Utworzyć zbiór <code>wyniki</code> łączący <code>analiza2015</code>
+i <code>analiza2022</code> zawierający zmienne:</li>
+</ol>
+<ul>
+<li><code>kod</code>, <code>kazwa</code>, oraz</li>
+<li>wskażniki z punkty 7</li>
+</ul>
+<ol start="9" style="list-style-type: decimal">
+<li>Porównać rankingi odpowiadające sobie między latami z
+wykorzystaniem:</li>
+</ol>
+<ul>
+<li>wykresu rozrzutu</li>
+<li>porównania pozycji w rankingu</li>
+<li>wyznaczenia różnicy w rankingach</li>
+</ul>
+<ol start="10" style="list-style-type: decimal">
+<li>zidentyfikować różnice między rankingami</li>
+</ol>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQUlSIC0gc3R1ZGl1bSBwcnp5cGFka3UiCmF1dGhvcjogIk1hY2llaiBCZXLEmXNld2ljeiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCiMgU3R1ZGl1bSBwcnp5cGFka3UKCkNlbGVtIG5pbmllanN6ZWdvIHN0dWRpdW0gcHJ6eXBhZGt1IChhbmcuIGNhc2Ugc3R1ZHkpIGplc3QgKip6YnVkb3dhbmllIHJhbmtpbmd1IGdtaW4gemUgd3pnbMSZZHUgemFkYW55IHplc3RhdyBjZWNoIGRsYSBkd8OzY2ggd3NrYXphbnljaCBsYXQqKi4gCgpDZWxlIHN6Y3plZ8OzxYJvd2UgZG90eWN6xIU6CgorIEMxOiBpbnRlZ3JhY2ppIGRhbnljaCB6IGtpbGt1IMW6csOzZGXFgi4KKyBDMjogb2tyZcWbbGVuaWUgY2hhcmFrdGVydSBiYWRhbnljaCB6bWllbm55Y2ggKHBvZHppYcWCIG5hIHN0eW11bGFudHksIGRlc3R5bXVsYW50eSBpIG5vbWluYW50eSkuCisgQzM6IHV0d29yemVuaWEgbWllcm5pa2Egc3ludGV0eWN6bmVnbyBtZXRvZMSFIGJlend6b3Jjb3fEhS4KKyBDNDogdXR3b3J6ZW5pZSBtaWVybmlrYSBzeW50ZXR5Y3puZWdvIHogd3lrb3J6eXN0YW5pZW0gbWV0b2R5IFRPUFNJUy4KKyBDNTogcG9yw7N3bmFuaWUgcmFua2luZ8OzdyBtacSZZHp5IGxhdGFtaS4KClB5dGFuaWE6CgojIERhbmUKCgoKIyBQb3N6Y3pnw7NsbmUga3Jva2kgYW5hbGl6eQoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQUlSIC0gc3R1ZGl1bSBwcnp5cGFka3UiCmF1dGhvcjogIk1hY2llaiBCZXLEmXNld2ljeiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCiMgU3R1ZGl1bSBwcnp5cGFka3UKCkNlbGVtIG5pbmllanN6ZWdvIHN0dWRpdW0gcHJ6eXBhZGt1IChhbmcuIGNhc2Ugc3R1ZHkpIGplc3QgKip6YnVkb3dhbmllIHJhbmtpbmd1IGdtaW4gemUgd3pnbMSZZHUgemFkYW55IHplc3RhdyBjZWNoIGRsYSAyMDE1IGkgMjAyMiByb2t1KiouIAoKQ2VsZSBzemN6ZWfDs8WCb3dlIGRvdHljesSFOgoKKyBDMTogaW50ZWdyYWNqaSBkYW55Y2ggeiBraWxrdSDFunLDs2RlxYIuCisgQzI6IG9rcmXFm2xlbmlhIGNoYXJha3RlcnUgYmFkYW55Y2ggem1pZW5ueWNoIChwb2R6aWHFgiBuYSBzdHltdWxhbnR5LCBkZXN0eW11bGFudHkgaSBub21pbmFudHkpLgorIEMzOiB1dHdvcnplbmlhIG1pZXJuaWthIHN5bnRldHljem5lZ28gbWV0b2TEhSBiZXp3em9yY293xIUuCisgQzQ6IHV0d29yemVuaWUgbWllcm5pa2Egc3ludGV0eWN6bmVnbyBtZXRvZMSFIFRPUFNJUy4KKyBDNTogcG9yw7N3bmFuaWUgcmFua2luZ8OzdyBtacSZZHp5IGxhdGFtaS4KClB5dGFuaWEgYmFkYXdjemU6CgorIGN6eSByYW5raW5nIHVsZWfFgiB6bWlhbmllIG5hIHByemVzdHJ6ZW5pIGJhZGFueWNoIGxhdD8KKyBrdMOzcmUgZ21pbnkgenlza2HFgnkgbmFqd2nEmWNlaiwgYSBrdMOzcmUgbmFqbW5pZWo/IAorIGpha2EgbW/FvGUgYnnEhyB0ZWdvIHByenljenluYT8KCiMgRGFuZQoKTmEgcG90cnplYnkgY2FzZSBzdHVkeSB1ZG9zdMSZcG5pb25vIG5hc3TEmXB1asSFY2UgZGFuZToKCisgKipaYXNvYnkgbWllc3prYW5pb3dlIC0gd3NrYcW6bmlraSoqOgogICsgcHJ6ZWNpxJl0bmEgcG93aWVyemNobmlhIHXFvHl0a293YSAxIG1pZXN6a2FuaWEKICArIHByemVjacSZdG5hIHBvd2llcnpjaG5pYSB1xbx5dGtvd2EgbWllc3prYW5pYSBuYSAxIG9zb2LEmQogICsgbWllc3prYW5pYSBuYSAxMDAwIG1pZXN6a2HFhGPDs3cKICArIHByemVjacSZdG5hIGxpY3piYSBpemIgdyAxIG1pZXN6a2FuaXUKICArIHByemVjacSZdG5hIGxpY3piYSBvc8OzYiBuYSAxIG1pZXN6a2FuaWUKICArIHByemVjacSZdG5hIGxpY3piYSBvc8OzYiBuYSAxIGl6YsSZCisgKipXc2thxbpuaWtpIG9iY2nEhcW8ZW5pYSBkZW1vZ3JhZmljem5lZ28qKjoKICArIGx1ZG5vxZvEhyB3IHdpZWt1IHBvcHJvZHVrY3lqbnltIG5hIDEwMCBvc8OzYiB3IHdpZWt1IHByb2R1a2N5am55bQogICsgd3Nww7PFgmN6eW5uaWsgb2JjacSFxbxlbmlhIGRlbW9ncmFmaWN6bmVnbyBvc29iYW1pIHN0YXJzenltaQorICoqVWR6aWHFgiBsdWRub8WbY2kgd2cgZWtvbm9taWN6bnljaCBncnVwIHdpZWt1IHcgJSBsdWRub8WbY2kgb2fDs8WCZW0qKgogICsgdyB3aWVrdSBwcnplZHByb2R1a2N5am55bQogICsgdyB3aWVrdSBwcm9kdWtjeWpueW0KKyAqKlRlcmVueSB6aWVsZW5pIC0gd3NrYcW6bmlraSoqCiAgKyB1ZHppYcWCIHBvd2llcnpjaG5pIHRlcmVuw7N3IHppZWxlbmkgdyBwb3dpZXJ6Y2huaSBvZ8OzxYJlbQogICsgbGljemJhIG5hc2FkemXFhCBkcnpldyBpIGtyemV3w7N3IHcgemFkcnpld2llbmlhY2ggb3JheiB0ZXJlbmFjaCB6aWVsZW5pIG5hIDEga20yIHBvd2llcnpjaG5pIGRhbmVqIGplZG5vc3RraQogIHRlcnl0b3JpYWxuZWoKCkRhbmUgcG9jaG9kesSFIHogQmFua3UgRGFueWNoIExva2FsbnljaCBpIHpvc3RhxYJ5IHVkb3N0xJlwbmlvbmUgdyBmb3JtYWNpZSBYTFNYIG9yYXogQ1NWLgoKIyBQb3N6Y3pnw7NsbmUga3Jva2kgYW5hbGl6eQoKQWJ5IHd5a29uYcSHIHphZGFuaWUgbmFsZcW8eToKCjEuIFByemVjenl0YcSHIGRlZmluaWNqZSBwb3N6Y3plZ8OzbG55Y2ggem1pZW5ueWNoIChwb21vZ8SFIHcgdHltIHBsaWtpIE1TIEV4Y2VsIGphayBpIHNhbSBCYW5rIERhbnljaCBMb2thbG55Y2gpIG9yYXogb2tyZcWbbGnEhyBjaGFyYWt0ZXIgem1pZW5ueWNoOiBzdHltdWxhbnR5IGkgZGVzdHltdWxhbnR5LgoyLiBXY3p5dGHEhyBkYW5lIHogcGxpa8OzdyBNUyBFeGNlbCBsdWIgY3N2IChnZHlieSBiecWCeSBwcm9ibGVteSB6IHdncmFuaWVtIGRhbnljaCBuYSBjb2xhYik6CiAgKyB3IG1vbWVuY2llIHdjenl0YW5pYSBuYWxlxbx5IG5hZGHEhyBuYXN0xJlwdWrEhWNlIG5hend5OiBga29kYCwgYG5hendhYCwgYHdza2AsIGByb2tgLCBgd2FydG9zY2AsIGBqZWRub3N0a2FgLCBgYXRyeWJ1dGAgemFtaWFzdCBgS29kO05hendhO1dza2HFum5pa2k7Um9rO1dhcnRvc2M7SmVkbm9zdGthIG1pYXJ5O0F0cnlidXRgLAogICsgdXdhZ2E6IHcgcHJ6eXBhZGt1IHdjenl0eXdhbmlhIHBsaWt1IHogQ1NWIHByb3N6xJkgcHJ6eWpyemXEhyBzacSZIGplZ28gc3RydWt0dXJ6ZS4KMy4gVXR3b3J6ecSHIG5vd2UgemJpb3J5IGRhbnljaCBkbGEga2HFvGRlZ28gd3NrYcW6bmlrYToKICArIHByenlrxYJhZG93bzogamXFvGVsaSB6YmnDs3IgemF3aWVyYSA2IHdza2HFum5pa8OzdyB0byBuYWxlxbx5IHV0d29yennEhyA2IHpiaW9yw7N3IGRhbnljaCBwb3ByemV6IGZpbHRyb3dhbmllIHdpZXJzenkuIFByenlrxYJhZG93bzoKICBgYGB7cHl0aG9ufQogIHdzazEgPSBtaWVzemthbmlhW21pZXN6a2FuaWFbJ3dzayddID09ICJwcnplY2nEmXRuYSBwb3dpZXJ6Y2huaWEgdcW8eXRrb3dhIDEgbWllc3prYW5pYSJdCiAgYGBgCiAgKyB3IGthxbxkeW0gemJpb3J6ZSBuYWxlxbx5IHphbWllbmnEhyBuYXp3xJkga29sdW1ueSBgd2FydG9zY2AgbmEgbmF6d8SZIHdza2HFum5pa2EgemdvZG5pZSB6IG5hc3TEmXB1asSFY3ltIHNjaGVtYXRlbSAobmF6d2Egd3NrYcW6bmlrYSA9PiBub3dhIG5hendhIGRsYSBrb2x1bW55IGB3YXJ0b3NjYCk6CiAgICAgICsgcHJ6ZWNpxJl0bmEgcG93aWVyemNobmlhIHXFvHl0a293YSAxIG1pZXN6a2FuaWEgPT4gYG1pZXN6a19wb3d1el8xbWAsCiAgICAgICsgcHJ6ZWNpxJl0bmEgcG93aWVyemNobmlhIHXFvHl0a293YSBtaWVzemthbmlhIG5hIDEgb3NvYsSZID0+IGBtaWVzemtfcG93dXpfMW9zYCwKICAgICAgKyBtaWVzemthbmlhIG5hIDEwMDAgbWllc3prYcWEY8OzdyA9PiBgbWllc3prX25hXzEwMDBrYCwKICAgICAgKyBwcnplY2nEmXRuYSBsaWN6YmEgaXpiIHcgMSBtaWVzemthbml1ID0+IGBtaWVzemtfaXpiXzFtYCwKICAgICAgKyBwcnplY2nEmXRuYSBsaWN6YmEgb3PDs2IgbmEgMSBtaWVzemthbmllID0+IGBtaWVzemtfb3NvYl8xbWAsCiAgICAgICsgcHJ6ZWNpxJl0bmEgbGljemJhIG9zw7NiIG5hIDEgaXpixJkgPT4gYG1pZXN6a19vc29iXzFpYCwKICAgICAgKyBsdWRub8WbxIcgdyB3aWVrdSBwb3Byb2R1a2N5am55bSBuYSAxMDAgb3PDs2IgdyB3aWVrdSBwcm9kdWtjeWpueW0gID0+IGBsdWRuX3BvcHJvZF8xMDAwcHJvZGAsCiAgICAgICsgd3Nww7PFgmN6eW5uaWsgb2JjacSFxbxlbmlhIGRlbW9ncmFmaWN6bmVnbyBvc29iYW1pIHN0YXJzenltaSA9PiBgbHVkbl93c2tfb2JjaWF6ZW5pYWAsCiAgICAgICsgdyB3aWVrdSBwcnplZHByb2R1a2N5am55bSA9PiBgbHVkbl91ZHpfcHJ6ZWAsCiAgICAgICsgdyB3aWVrdSBwcm9kdWtjeWpueW0gPT4gYGx1ZG5fdWR6X3Byb2RgLAogICAgICArIHVkemlhxYIgcG93aWVyemNobmkgdGVyZW7Ds3cgemllbGVuaSB3IHBvd2llcnpjaG5pIG9nw7PFgmVtID0+IGB6aWVsZW5fcG93YCwKICAgICAgKyBsaWN6YmEgbmFzYWR6ZcWEIGRyemV3IGkga3J6ZXfDs3cgdyB6YWRyemV3aWVuaWFjaCBvcmF6IHRlcmVuYWNoIHppZWxlbmkgbmEgMSBrbTIgcG93aWVyemNobmkgZGFuZWogamVkbm9zdGtpCiAgdGVyeXRvcmlhbG5laiA9PiBgemllbGVuX25hc2FkemVuaWFgLAogIAo0LiBQb8WCxIVjennEhyB3c3p5c3RraWUgemJpb3J5IHcgamVkZW4sIHdpxJlrc3p5IHpiacOzciBkYW55Y2ggemF3aWVyYWrEhWN5IHdzenlzdGtpZSB3c2thxbxuaWtpIG9yYXogbmFzdMSZcHVqxIVjZSBrb2x1bW55OiBga29kYCwgYGthendhYCwgYHJva2Agd3lrb3J6eXN0dWrEhWMgYHBkLm1lcmdlKClgLgo1LiBPZHBvd2llZHppZcSHIG5hIHB5dGFuaWE6CiAgICArIEN6eSB3c3p5c3RraWUgd3NrYcW6bmlraSBtb8W8ZW15IHXFvHnEhz8gCiAgICArIEN6eSBtYW15IHBlxYJuxIUgaW5mb3JtYWNqxJk/CiAgICArIE1vxbxlIHRyemViYSBqYWtpZcWbIHptaWVubmUgcG9taW7EhcSHIGJvIG1hasSFIGR1xbxvIGJyYWvDs3cgZGFueWNoPwoKNi4gVXR3b3J6ecSHIGR3YSB6YmlvcnkgZGFueWNoOiBgYW5hbGl6YTIwMTVgIGkgYGFuYWxpemEyMDIyYC4KNy4gRGxhIGthxbxkZWdvIHpiaW9ydSBuaWV6YWxlxbxuaWUgdXR3b3J6ecSHIGR3YSB3c2thxbpuaWtpOgogICAgKyBtZXRvZMSFIGJlend6b3Jjb3fEhSAoa29sdW1ueSBgYmV6X3JhbmtpbmdfMjAxNWAsIGBiZXpfc21yX3Jva18yMDE1YCwgYGJlel9yYW5raW5nXzIwMjJgLCBgYmV6X3Ntcl9yb2tfMjAyMmApLAogICAgKyBtZXRvZMSFIFRPUFNJUyAoa29sdW1ueSBgd3pyX3JhbmtpbmdfMjAxNWAsIGB3enJfc21yXzIwMTVgLCBgd3pyX3JhbmtpbmdfMjAyMmAsIGB3enJfc21yXzIwMjJgKSwKICAgICsgYWJ5IHV0d29yennEhyByYW5raW5nIG1vem5hIHpiacOzciBkYW55Y2ggcG9zb3J0b3dhxIcgaSB1dHdvcnp5xIcga29sdW1uxJkgdcW8eXdhasSFYyBtZXRvZHkgYHJhbmsoJ2RlbnNlJywgYXNjZW5kaW5nPUZhbHNlKWAuCjguIFV0d29yennEhyB6YmnDs3IgYHd5bmlraWAgxYLEhWN6xIVjeSBgYW5hbGl6YTIwMTVgIGkgIGBhbmFsaXphMjAyMmAgemF3aWVyYWrEhWN5IHptaWVubmU6CiAgKyBga29kYCwgYGthendhYCwgb3JheiAKICArIHdza2HFvG5pa2kgeiBwdW5rdHkgNwo5LiBQb3LDs3duYcSHIHJhbmtpbmdpIG9kcG93aWFkYWrEhWNlIHNvYmllIG1pxJlkenkgbGF0YW1pIHogd3lrb3J6eXN0YW5pZW06CiAgKyB3eWtyZXN1IHJvenJ6dXR1CiAgKyBwb3LDs3duYW5pYSBwb3p5Y2ppIHcgcmFua2luZ3UKICArIHd5em5hY3plbmlhIHLDs8W8bmljeSB3IHJhbmtpbmdhY2gKMTAuIHppZGVudHlmaWtvd2HEhyByw7PFvG5pY2UgbWnEmWR6eSByYW5raW5nYW1pCgogIAoK</div>
 
 
 
