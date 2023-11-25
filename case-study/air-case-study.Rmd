@@ -23,6 +23,7 @@ Pytania badawcze:
 + które gminy zyskały najwięcej, a które najmniej? 
 + jaka może być tego przyczyna?
 
+
 # Dane
 
 Na potrzeby case study udostępniono następujące dane:
@@ -47,9 +48,10 @@ Na potrzeby case study udostępniono następujące dane:
 
 Dane pochodzą z Banku Danych Lokalnych i zostały udostępnione w formacie XLSX oraz CSV.
 
+
 # Poszczgólne kroki analizy
 
-Aby wykonać zadanie należy:
+Aby wykonać zadanie należy
 
 1. Przeczytać definicje poszczególnych zmiennych (pomogą w tym pliki MS Excel jak i sam Bank Danych Lokalnych) oraz określić charakter zmiennych: stymulanty i destymulanty.
 2. Wczytać dane z plików MS Excel lub csv (gdyby były problemy z wgraniem danych na colab):
@@ -74,26 +76,22 @@ Aby wykonać zadanie należy:
       + udział powierzchni terenów zieleni w powierzchni ogółem => `zielen_pow`,
       + liczba nasadzeń drzew i krzewów w zadrzewieniach oraz terenach zieleni na 1 km2 powierzchni danej jednostki
   terytorialnej => `zielen_nasadzenia`,
-  
-4. Połączyć wszystkie zbiory w jeden, większy zbiór danych zawierający wszystkie wskażniki oraz następujące kolumny: `kod`, `kazwa`, `rok` wykorzystując `pd.merge()`.
+4. Połączyć wszystkie zbiory w jeden, większy zbiór danych zawierający wszystkie wskaźniki oraz następujące kolumny: `kod`, `kazwa`, `rok` wykorzystując `pd.merge()`.
 5. Odpowiedzieć na pytania:
     + Czy wszystkie wskaźniki możemy użyć? 
     + Czy mamy pełną informację?
     + Może trzeba jakieś zmienne pominąć bo mają dużo braków danych?
-
+    + Na potrzeby tego ćwiczenia zastąpimy wszystkie braki danych wartościami 0 (`analiza=analiza.fillna(0)`)
 6. Utworzyć dwa zbiory danych: `analiza2015` i `analiza2022`.
 7. Dla każdego zbioru niezależnie utworzyć dwa wskaźniki:
     + metodą bezwzorcową (kolumny `bez_ranking_2015`, `bez_smr_rok_2015`, `bez_ranking_2022`, `bez_smr_rok_2022`),
     + metodą TOPSIS (kolumny `wzr_ranking_2015`, `wzr_smr_2015`, `wzr_ranking_2022`, `wzr_smr_2022`),
-    + aby utworzyć ranking mozna zbiór danych posortować i utworzyć kolumnę używając metody `rank('dense', ascending=False)`.
+    + aby utworzyć ranking można zbiór danych posortować i utworzyć kolumnę używając metody `rank('dense', ascending=False)`.
 8. Utworzyć zbiór `wyniki` łączący `analiza2015` i  `analiza2022` zawierający zmienne:
   + `kod`, `kazwa`, oraz 
-  + wskażniki z punkty 7
+  + wskaźniki z punkty 7
 9. Porównać rankingi odpowiadające sobie między latami z wykorzystaniem:
   + wykresu rozrzutu
   + porównania pozycji w rankingu
   + wyznaczenia różnicy w rankingach
 10. zidentyfikować różnice między rankingami
-
-  
-
