@@ -1,0 +1,27 @@
+---
+title: "AIR - studium przypadku"
+author: "Maciej Beręsewicz"
+output: html_notebook
+---
+
+
+# Studium przypadku
+
+Celem niniejszego studium przypadku (ang. case study) jest **zbudowanie rankingu gmin ze względu zadany zestaw cech dla dwóch wskazanych lat**. 
+
+Cele szczegółowe dotyczą:
+
++ C1: integracji danych z kilku źródeł.
++ C2: określenie charakteru badanych zmiennych (podział na stymulanty, destymulanty i nominanty).
++ C3: utworzenia miernika syntetycznego metodą bezwzorcową.
++ C4: utworzenie miernika syntetycznego z wykorzystaniem metody TOPSIS.
++ C5: porównanie rankingów między latami.
+
+Pytania:
+
+# Dane
+
+
+
+# Poszczgólne kroki analizy
+
