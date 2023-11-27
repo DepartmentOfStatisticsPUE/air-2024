@@ -4,6 +4,14 @@ import glob
 # jezeli mamy w jednym miejscu pliki csv
 dane_csv = glob.glob("../data/*.csv")
 
+## ewentaulnie pliki csv
+dane_csv = [
+"https://raw.githubusercontent.com/DepartmentOfStatisticsPUE/air-2024/main/case-study/data/gminy-lokale.csv",
+"https://raw.githubusercontent.com/DepartmentOfStatisticsPUE/air-2024/main/case-study/data/gminy-lud-obc.csv",
+"https://raw.githubusercontent.com/DepartmentOfStatisticsPUE/air-2024/main/case-study/data/gminy-lud-udzial.csv",
+"https://raw.githubusercontent.com/DepartmentOfStatisticsPUE/air-2024/main/case-study/data/gminy-zielone.csv"
+]
+
 # wczytujemy pliki csv do listy
 dane = [pd.read_csv(file, skiprows=1, sep=";", decimal=",", names=["kod", "nazwa", "wsk", "rok", "wartosc", "jednostka", "atrybut"], na_values="-", dtype={"kod": str, "nazwa": str, "wsk": str, "rok": int, "wartosc": float, "jednostka": str, "atrybut": str}) for file in dane_csv]
 
