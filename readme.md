@@ -12,3 +12,4 @@
         + [metoda TOPSIS](notebooks/3_porzadkowanie_topsis.ipynb)
     + Wykład 5: [Case study na zajęcia](https://htmlpreview.github.io/?https://raw.githubusercontent.com/DepartmentOfStatisticsPUE/air-2024/main/case-study/air-case-study.nb.html)
 4. Dane wąskie i szerokie [ćwiczenia](notebooks/air_pivot_cwiczenia.ipynb)
+5. Dane przestrzenne [Notatnik](notebooks/4_przestrzenne.ipynb)
